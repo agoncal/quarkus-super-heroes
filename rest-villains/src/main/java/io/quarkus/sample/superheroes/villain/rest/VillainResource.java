@@ -228,6 +228,7 @@ public class VillainResource {
 		description = "Ping hello"
 	)
 	public String hello() {
-		return "Hello Villain Resource";
+    this.logger.debug("Hello Villain Resource");
+    return "Hello Villain Resource";
 	}
 }
