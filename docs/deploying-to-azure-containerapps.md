@@ -335,11 +335,10 @@ To configure the Fight microservice we will need to set the MongoDB connection s
 To get this connection string use the following command:
 
 ```shell
-MONGO_COLLECTION_CONNECT_STRING=$(az cosmosdb keys list \
+MONGO_CONNECTION_STRING=$(az cosmosdb keys list \
   --resource-group "$RESOURCE_GROUP" \
   --name "$MONGO_DB" \
-  --type connection-strings \
-  --query "connectionStrings[?description=='Primary MongoDB Connection String'].connectionString" \
+  --query "primaryMasterKey" \
   --output tsv)
 
 echo $MONGO_CONNECTION_STRING
@@ -480,7 +479,7 @@ To access the logs of the Heroes microservice, you can write the following query
 ````shell
 az monitor log-analytics query \
   --workspace $LOG_ANALYTICS_WORKSPACE_CLIENT_ID \
-  --analytics-query "ContainerAppConsoleLogs_CL | where ContainerAppName_s == '$HEROES_APP' | project ContainerAppName_s, Log_s, TimeGenerated " \
+  --analytics-query "ContainerAppConsoleLogs_CL | where ContainerAppName_s == '$HEROES_APP' | project ContainerAppName_s, Log_s, TimeGenerated | sort by TimeGenerated desc" \
   --output table
 ````
 
@@ -528,7 +527,7 @@ To access the logs of the Villain microservice, you can write the following quer
 ````shell
 az monitor log-analytics query \
   --workspace $LOG_ANALYTICS_WORKSPACE_CLIENT_ID \
-  --analytics-query "ContainerAppConsoleLogs_CL | where ContainerAppName_s == '$VILLAINS_APP' | project ContainerAppName_s, Log_s, TimeGenerated " \
+  --analytics-query "ContainerAppConsoleLogs_CL | where ContainerAppName_s == '$VILLAINS_APP' | project ContainerAppName_s, Log_s, TimeGenerated | sort by TimeGenerated desc" \
   --output table
 ````
 
@@ -578,7 +577,7 @@ To access the logs of the Statistics microservice, you can write the following q
 ````shell
 az monitor log-analytics query \
   --workspace $LOG_ANALYTICS_WORKSPACE_CLIENT_ID \
-  --analytics-query "ContainerAppConsoleLogs_CL | where ContainerAppName_s == '$STATISTICS_APP' | project ContainerAppName_s, Log_s, TimeGenerated " \
+  --analytics-query "ContainerAppConsoleLogs_CL | where ContainerAppName_s == '$STATISTICS_APP' | project ContainerAppName_s, Log_s, TimeGenerated | sort by TimeGenerated desc" \
   --output table
 ````
 
@@ -638,7 +637,7 @@ To access the logs of the Fight microservice, you can write the following query:
 ````shell
 az monitor log-analytics query \
   --workspace $LOG_ANALYTICS_WORKSPACE_CLIENT_ID \
-  --analytics-query "ContainerAppConsoleLogs_CL | where ContainerAppName_s == '$FIGHTS_APP' | project ContainerAppName_s, Log_s, TimeGenerated " \
+  --analytics-query "ContainerAppConsoleLogs_CL | where ContainerAppName_s == '$FIGHTS_APP' | project ContainerAppName_s, Log_s, TimeGenerated | sort by TimeGenerated desc" \
   --output table
 ````
 
